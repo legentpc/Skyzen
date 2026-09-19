@@ -10,6 +10,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderContext
 import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.fabricmc.fabric.api.event.player.UseEntityCallback
 import net.minecraft.client.Minecraft
@@ -54,6 +55,10 @@ object LineToFloorDrop : Module("Line to Floor Drop") {
             if (entity is Display.ItemDisplay) collectAt(entity.blockPosition())
             InteractionResult.PASS
         }
+        AttackEntityCallback.EVENT.register { _, _, _, entity, _ ->
+            if (entity is Display.ItemDisplay) collectAt(entity.blockPosition())
+            InteractionResult.PASS
+        }
         SkyzenEvents.WORLD_CHANGE.register {
             floorDrops.clear()
             collectedDrops.clear()
@@ -70,7 +75,8 @@ object LineToFloorDrop : Module("Line to Floor Drop") {
         val hunting = SkyzenModLoader.configManager.config.hunting
 
         val radius = hunting.floorDropScanRadius.toDouble()
-        val box = AABB.ofSize(player.position(), radius * 2.0, radius * 2.0, radius * 2.0)
+        // Extra block of Y margin: markers match on block Y, so an entity can sit up to a block above it
+        val box = AABB.ofSize(player.position(), radius * 2.0, VERTICAL_SEARCH_RANGE * 2.0 + 2.0, radius * 2.0)
         val playerY = player.position().y
 
         level.getEntitiesOfClass(Display.ItemDisplay::class.java, box)

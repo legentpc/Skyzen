@@ -1,5 +1,6 @@
 package at.legentpc.skyzen.config.features.hunting
 
+import com.google.gson.annotations.Expose
 import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
 import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorDraggableList
 import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorSlider
@@ -7,6 +8,7 @@ import io.github.notenoughupdates.moulconfig.annotations.ConfigOption
 
 class HuntingConfig {
 
+    @Expose
     @ConfigOption(
         name = "Line to Floor Drop",
         desc = "Draws a line to the nearest Floor Drop on the ground.",
@@ -14,6 +16,7 @@ class HuntingConfig {
     @ConfigEditorBoolean
     var lineToFloorDrop: Boolean = true
 
+    @Expose
     @ConfigOption(
         name = "Line to Floor Drop Width",
         desc = "The width of the line pointing to the nearest Floor Drop.",
@@ -21,6 +24,7 @@ class HuntingConfig {
     @ConfigEditorSlider(minStep = 1f, minValue = 1f, maxValue = 10f)
     var floorDropLineWidth: Int = 3
 
+    @Expose
     @ConfigOption(
         name = "Floor Drop Islands",
         desc = "Select the islands where the Line to Floor Drop feature should work.",
@@ -41,6 +45,7 @@ class HuntingConfig {
         override fun toString() = displayName
     }
 
+    @Expose
     @ConfigOption(
         name = "Line to Floor Drop Distance",
         desc = "Maximum distance between you and a Floor Drop for the line to be shown.",
@@ -48,6 +53,7 @@ class HuntingConfig {
     @ConfigEditorSlider(minStep = 1f, minValue = 5f, maxValue = 128f)
     var floorDropMaxDistance: Int = 15
 
+    @Expose
     @ConfigOption(
         name = "Floor Drop Scan Radius",
         desc = "Radius in blocks to scan for Floor Drops around the player. Higher values may impact performance.",
