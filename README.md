@@ -19,6 +19,7 @@ A modern, lightweight Minecraft Fabric mod for Hypixel SkyBlock, featuring usefu
 ## Features
 
 * **Gift Clean Display:** Hides the `From:` / `To:` nametags floating above gift entities in SkyBlock.
+* **Line to Floor Drop:** Draws a line to the nearest floor drop on the ground in Moonglade Marsh, Torrhus Canyon, and Critter Safari.
 * **Config GUI:** Type `/skyzen` in chat to open the in-game settings menu.
 
 See the full [feature list](docs/FEATURES.md) for details and toggles.

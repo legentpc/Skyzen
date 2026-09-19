@@ -2,6 +2,7 @@ package at.legentpc.skyzen
 
 import at.legentpc.skyzen.config.SkyzenConfigManager
 import at.legentpc.skyzen.config.ConfigGuiManager
+import at.legentpc.skyzen.features.hunting.LineToFloorDrop
 import at.legentpc.skyzen.features.misc.GiftCleanDisplay
 import at.legentpc.skyzen.utils.HypixelUtils
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
@@ -23,6 +24,7 @@ object SkyzenModLoader : ClientModInitializer {
 
     private fun registerFeatures() {
         GiftCleanDisplay.init()
+        LineToFloorDrop.init()
     }
 
     private fun registerCommands() {

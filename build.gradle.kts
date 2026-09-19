@@ -12,7 +12,7 @@ val versionedLibs = the<VersionCatalogsExtension>()
 fun VersionCatalog.lib(name: String) = findLibrary(name).get()
 fun VersionCatalog.ver(name: String) = findVersion(name).get()
 
-version = "${providers.gradleProperty("mod_version").get()}+${sc.current.project}"
+version = "${providers.gradleProperty("mod_version").get()}-mc${sc.current.project}"
 group = providers.gradleProperty("maven_group").get()
 base.archivesName = rootProject.name
 

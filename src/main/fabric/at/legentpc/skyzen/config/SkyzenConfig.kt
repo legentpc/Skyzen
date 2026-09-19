@@ -1,5 +1,6 @@
 package at.legentpc.skyzen.config
 
+import at.legentpc.skyzen.config.features.hunting.HuntingConfig
 import at.legentpc.skyzen.config.features.misc.MiscConfig
 import io.github.notenoughupdates.moulconfig.Config
 import io.github.notenoughupdates.moulconfig.annotations.Category
@@ -10,6 +11,9 @@ class SkyzenConfig : Config() {
 
     @Category(name = "General", desc = "General Settings")
     var general: GeneralConfig = GeneralConfig()
+
+    @Category(name = "Hunting", desc = "Hunting Features")
+    var hunting: HuntingConfig = HuntingConfig()
 
     @Category(name = "Misc", desc = "Miscellaneous Features")
     var misc: MiscConfig = MiscConfig()
