@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.fabric.loom)
     alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
 }
 
 val versionedLibs = the<VersionCatalogsExtension>()
@@ -11,6 +12,10 @@ val versionedLibs = the<VersionCatalogsExtension>()
 
 fun VersionCatalog.lib(name: String) = findLibrary(name).get()
 fun VersionCatalog.ver(name: String) = findVersion(name).get()
+
+val shadowImpl = configurations.create("shadowImpl") {
+    configurations.implementation.get().extendsFrom(this)
+}
 
 version = "${providers.gradleProperty("mod_version").get()}-mc${sc.current.project}"
 group = providers.gradleProperty("maven_group").get()
@@ -39,8 +44,10 @@ dependencies {
     implementation(libs.fabric.language.kotlin)
     implementation(versionedLibs.lib("fabric-api"))
 
-    implementation(versionedLibs.lib("moulconfig"))
-    include(versionedLibs.lib("moulconfig"))
+    shadowImpl(versionedLibs.lib("moulconfig")) {
+        exclude("org.jetbrains.kotlin")
+        exclude("org.jetbrains.kotlinx")
+    }
 }
 
 tasks.processResources {
@@ -66,3 +73,16 @@ java {
     sourceCompatibility = JavaVersion.VERSION_25
     targetCompatibility = JavaVersion.VERSION_25
 }
+
+tasks.shadowJar {
+    destinationDirectory.set(layout.buildDirectory.dir("shadowlibs"))
+    archiveClassifier.set("")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    configurations = listOf(shadowImpl)
+    exclude("META-INF/versions/**")
+    exclude("META-INF/*.kotlin_module")
+    mergeServiceFiles()
+    relocate("io.github.notenoughupdates.moulconfig", "at.legentpc.skyzen.deps.moulconfig")
+}
+
+tasks.assemble.get().dependsOn(tasks.shadowJar)
