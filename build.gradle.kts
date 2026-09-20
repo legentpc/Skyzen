@@ -75,7 +75,7 @@ java {
 }
 
 tasks.shadowJar {
-    destinationDirectory.set(layout.buildDirectory.dir("shadowlibs"))
+    destinationDirectory.set(layout.buildDirectory.dir("libs"))
     archiveClassifier.set("")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     configurations = listOf(shadowImpl)
@@ -83,6 +83,11 @@ tasks.shadowJar {
     exclude("META-INF/*.kotlin_module")
     mergeServiceFiles()
     relocate("io.github.notenoughupdates.moulconfig", "at.legentpc.skyzen.deps.moulconfig")
+}
+
+tasks.jar {
+    archiveClassifier.set("nodeps")
+    destinationDirectory.set(layout.buildDirectory.dir("devlibs"))
 }
 
 tasks.assemble.get().dependsOn(tasks.shadowJar)
