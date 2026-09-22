@@ -7,6 +7,7 @@
   "authors": ["LegentPc"],
   "contact": {},
   "license": "LGPL-2.1",
+  "accessWidener": "moulconfig.accesswidener",
   "environment": "client",
   "entrypoints": {
     "main": [
