@@ -75,8 +75,10 @@ java {
 }
 
 // Entries mirror MoulConfig's own accesswidener; re-check on version bumps.
+// Root-relative: Loom checks this at configuration time, before Stonecutter
+// preprocesses resources into versions/<ver>/.
 loom {
-    accessWidenerPath.set(file("src/main/resources/skyzen.accesswidener"))
+    accessWidenerPath.set(rootProject.file("src/main/resources/skyzen.accesswidener"))
 }
 
 tasks.shadowJar {
