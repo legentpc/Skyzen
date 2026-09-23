@@ -8,7 +8,7 @@
 ## Misc
 
 * **Gift Clean Display** — Hides the `From:` / `To:` nametags floating above gift entities in SkyBlock.
-  Toggle: *Misc → Hide Gift Nametag* (default: ON)
+  Toggle: *Misc → Clean Gift Nametags* (default: ON)
 
 ## General
 

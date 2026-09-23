@@ -11,7 +11,7 @@ object GiftCleanDisplay : Module("Gift Clean Display") {
 
     fun init() {
         SkyzenEvents.ENTITY_DISPLAY_NAME.register { event ->
-            if (!SkyzenModLoader.configManager.config.misc.hideGiftNametag) return@register
+            if (!SkyzenModLoader.configManager.config.misc.cleanGiftNametags) return@register
             val clean = event.displayName.string.replace(colorCode, "").trim()
             if (clean.startsWith("From:") || clean.startsWith("To:")) {
                 event.displayName = Component.literal("")

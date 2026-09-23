@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.zip.ZipFile
 
 plugins {
     alias(libs.plugins.fabric.loom)
@@ -60,9 +61,9 @@ dependencies {
 // Shading drops the nested fabric.mod.json that used to declare it, so pull
 // the file out of the jar once and expose it to Loom and the packed resources.
 if (!moulconfigAccessWidener.exists()) {
-    val moulconfigJar = configurations.shadowImpl.resolve().first { it.name.startsWith("modern-") }
+    val moulconfigJar = shadowImpl.resolve().first { it.name.startsWith("modern-") }
     generatedAwDir.mkdirs()
-    java.util.zip.ZipFile(moulconfigJar).use { zip ->
+    ZipFile(moulconfigJar).use { zip ->
         val entry = zip.getEntry("moulconfig.accesswidener")
             ?: error("moulconfig.accesswidener not found in ${moulconfigJar.name}")
         zip.getInputStream(entry).use { input ->

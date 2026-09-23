@@ -7,7 +7,7 @@ import io.github.notenoughupdates.moulconfig.annotations.ConfigOption
 class MiscConfig {
 
     @Expose
-    @ConfigOption(name = "Hide Gift Nametag", desc = "Hides the nametag above gifts in Skyblock")
+    @ConfigOption(name = "Clean Gift Nametags", desc = "Cleans the From: / To: nametags above gift entities in Skyblock")
     @ConfigEditorBoolean
-    var hideGiftNametag: Boolean = true
+    var cleanGiftNametags: Boolean = true
 }
