@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.fabric.loom)
     alias(libs.plugins.kotlin)
-    alias(libs.plugins.shadow)
 }
 
 val versionedLibs = the<VersionCatalogsExtension>()
@@ -12,10 +11,6 @@ val versionedLibs = the<VersionCatalogsExtension>()
 
 fun VersionCatalog.lib(name: String) = findLibrary(name).get()
 fun VersionCatalog.ver(name: String) = findVersion(name).get()
-
-val shadowImpl = configurations.create("shadowImpl") {
-    configurations.implementation.get().extendsFrom(this)
-}
 
 version = "${providers.gradleProperty("mod_version").get()}-mc${sc.current.project}"
 group = providers.gradleProperty("maven_group").get()
@@ -34,7 +29,6 @@ sourceSets {
 
 repositories {
     mavenCentral()
-    maven("https://maven.notenoughupdates.org/releases/")
 }
 
 dependencies {
@@ -43,11 +37,6 @@ dependencies {
     implementation(libs.fabric.loader)
     implementation(libs.fabric.language.kotlin)
     implementation(versionedLibs.lib("fabric-api"))
-
-    shadowImpl(versionedLibs.lib("moulconfig")) {
-        exclude("org.jetbrains.kotlin")
-        exclude("org.jetbrains.kotlinx")
-    }
 }
 
 tasks.processResources {
@@ -73,26 +62,3 @@ java {
     sourceCompatibility = JavaVersion.VERSION_25
     targetCompatibility = JavaVersion.VERSION_25
 }
-
-// Entries mirror MoulConfig's own accesswidener; re-check on version bumps.
-loom {
-    accessWidenerPath.set(file("src/main/resources/skyzen.accesswidener"))
-}
-
-tasks.shadowJar {
-    destinationDirectory.set(layout.buildDirectory.dir("libs"))
-    archiveClassifier.set("")
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    configurations = listOf(shadowImpl)
-    exclude("META-INF/versions/**")
-    exclude("META-INF/*.kotlin_module")
-    mergeServiceFiles()
-    relocate("io.github.notenoughupdates.moulconfig", "at.legentpc.skyzen.deps.moulconfig")
-}
-
-tasks.jar {
-    archiveClassifier.set("nodeps")
-    destinationDirectory.set(layout.buildDirectory.dir("devlibs"))
-}
-
-tasks.assemble.get().dependsOn(tasks.shadowJar)

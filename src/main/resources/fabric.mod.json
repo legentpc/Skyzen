@@ -7,8 +7,7 @@
   "authors": ["LegentPc"],
   "contact": {},
   "license": "LGPL-2.1",
-  "accessWidener": "skyzen.accesswidener",
-  "environment": "client",
+  "environment": "client",src/main/resources/skyzen.accesswidener
   "entrypoints": {
     "main": [
       {

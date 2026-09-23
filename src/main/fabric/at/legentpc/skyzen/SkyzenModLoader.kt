@@ -1,7 +1,6 @@
 package at.legentpc.skyzen
 
 import at.legentpc.skyzen.config.SkyzenConfigManager
-import at.legentpc.skyzen.config.ConfigGuiManager
 import at.legentpc.skyzen.features.hunting.LineToFloorDrop
 import at.legentpc.skyzen.features.misc.GiftCleanDisplay
 import at.legentpc.skyzen.utils.HypixelUtils
@@ -10,6 +9,7 @@ import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents
+import net.minecraft.network.chat.Component
 
 object SkyzenModLoader : ClientModInitializer {
 
@@ -32,7 +32,9 @@ object SkyzenModLoader : ClientModInitializer {
             dispatcher.register(
                 LiteralArgumentBuilder.literal<FabricClientCommandSource>("skyzen")
                     .executes {
-                        ConfigGuiManager.openGui()
+                        it.source.sendFeedback(
+                            Component.literal("Skyzen config: ${configManager.configFile.absolutePath}")
+                        )
                         1
                     }
             )
