@@ -8,6 +8,6 @@ class EntityDisplayNameEvent(
     var displayName: Component
 )
 
-fun interface EntityDisplayNameCallback {
-    fun onDisplayName(event: EntityDisplayNameEvent)
+interface EntityDisplayNameCallback {
+    fun onDisplayName(event: EntityDisplayNameEvent) {}
 }

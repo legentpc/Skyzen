@@ -15,6 +15,6 @@ package at.legentpc.skyzen.events
  *
  * @see IslandChangeEvent
  */
-fun interface WorldChangeEvent {
-    fun onWorldChange()
+interface WorldChangeEvent {
+    fun onWorldChange() {}
 }

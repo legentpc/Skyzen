@@ -7,7 +7,7 @@
   "authors": ["LegentPc"],
   "contact": {},
   "license": "LGPL-2.1",
-  "environment": "client",src/main/resources/skyzen.accesswidener
+  "environment": "client",
   "entrypoints": {
     "main": [
       {
@@ -22,9 +22,6 @@
       }
     ]
   },
-  "mixins": [
-    "mixins.skyzen.json"
-  ],
   "depends": {
     "fabricloader": ">=0.19.5",
     "fabric-language-kotlin": ">=1.13.13+kotlin.2.4.10",

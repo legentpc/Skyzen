@@ -1,9 +1,9 @@
 package at.legentpc.skyzen
 
 import at.legentpc.skyzen.config.SkyzenConfigManager
-import at.legentpc.skyzen.features.hunting.LineToFloorDrop
-import at.legentpc.skyzen.features.misc.GiftCleanDisplay
-import at.legentpc.skyzen.utils.HypixelUtils
+// import at.legentpc.skyzen.features.hunting.LineToFloorDrop
+// import at.legentpc.skyzen.features.misc.GiftCleanDisplay
+// import at.legentpc.skyzen.utils.HypixelUtils
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
@@ -16,15 +16,15 @@ object SkyzenModLoader : ClientModInitializer {
     val configManager: SkyzenConfigManager = SkyzenConfigManager()
 
     override fun onInitializeClient() {
-        HypixelUtils.init()
+        // HypixelUtils.init()
         registerFeatures()
         registerCommands()
         registerShutdownHook()
     }
 
     private fun registerFeatures() {
-        GiftCleanDisplay.init()
-        LineToFloorDrop.init()
+        // GiftCleanDisplay.init()
+        // LineToFloorDrop.init()
     }
 
     private fun registerCommands() {
