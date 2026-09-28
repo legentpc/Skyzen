@@ -1,13 +1,14 @@
 package at.legentpc.skyzen.config.features.misc
 
-import com.google.gson.annotations.Expose
-import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
-import io.github.notenoughupdates.moulconfig.annotations.ConfigOption
+import com.moulberry.lattice.annotation.LatticeOption
+import com.moulberry.lattice.annotation.widget.LatticeWidgetButton
 
 class MiscConfig {
 
-    @Expose
-    @ConfigOption(name = "Hide Gift Nametag", desc = "Hides the nametag above gifts in Skyblock")
-    @ConfigEditorBoolean
-    var hideGiftNametag: Boolean = true
+    @LatticeOption(
+        title = "Clean Gift Nametags",
+        description = "Removes unnecessary text from gift nametags.",
+    )
+    @LatticeWidgetButton
+    var cleanGiftNametags: Boolean = true
 }

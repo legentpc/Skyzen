@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.fabric.loom)
     alias(libs.plugins.kotlin)
+    id("dev.detekt")
 }
 
 val versionedLibs = the<VersionCatalogsExtension>()
@@ -11,6 +12,11 @@ val versionedLibs = the<VersionCatalogsExtension>()
 
 fun VersionCatalog.lib(name: String) = findLibrary(name).get()
 fun VersionCatalog.ver(name: String) = findVersion(name).get()
+
+fun DependencyHandlerScope.includeImplementation(dependencyNotation: Provider<*>) {
+    include(dependencyNotation)
+    implementation(dependencyNotation)
+}
 
 version = "${providers.gradleProperty("mod_version").get()}-mc${sc.current.project}"
 group = providers.gradleProperty("maven_group").get()
@@ -29,7 +35,12 @@ sourceSets {
 
 repositories {
     mavenCentral()
-    maven("https://maven.notenoughupdates.org/releases/")
+
+    maven("https://maven.terraformersmc.com/releases") {
+        content {
+            includeGroup("com.terraformersmc")
+        }
+    }
 }
 
 dependencies {
@@ -39,8 +50,8 @@ dependencies {
     implementation(libs.fabric.language.kotlin)
     implementation(versionedLibs.lib("fabric-api"))
 
-    implementation(versionedLibs.lib("moulconfig"))
-    include(versionedLibs.lib("moulconfig"))
+    includeImplementation(libs.lattice)
+    compileOnly(versionedLibs.lib("modmenu"))
 }
 
 tasks.processResources {
@@ -59,10 +70,21 @@ tasks.processResources {
 kotlin {
     compilerOptions {
         jvmTarget = JvmTarget.JVM_25
+        javaParameters.set(true)
     }
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_25
     targetCompatibility = JavaVersion.VERSION_25
+}
+
+detekt {
+    toolVersion = "2.0.0-alpha.6"
+    source.setFrom(rootProject.file("src/main/fabric"))
+    config.setFrom(rootProject.file("detekt/detekt.yml"))
+    buildUponDefaultConfig = true
+    parallel = true
+    ignoreFailures = false
+    basePath.set(rootProject.projectDir)
 }

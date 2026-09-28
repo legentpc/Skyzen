@@ -5,6 +5,11 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
+
+    plugins {
+        // We can't use libs refs in settings, so this is not stored in libs.versions.toml.
+        id("dev.detekt") version "2.0.0-alpha.6"
+    }
 }
 
 plugins {

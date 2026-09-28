@@ -9,7 +9,7 @@ enum class IslandType(val displayName: String, vararg val areas: String) {
     CRITTER_SAFARI("Critter Safari", "Safari"),
     UNKNOWN("Unknown");
 
-    fun isActive(): Boolean = this == HypixelUtils.currentIsland
+    override fun toString(): String = displayName
 
     companion object {
         fun fromArea(area: String): IslandType {

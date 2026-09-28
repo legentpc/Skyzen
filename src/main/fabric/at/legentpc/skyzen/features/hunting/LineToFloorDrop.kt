@@ -3,6 +3,7 @@ package at.legentpc.skyzen.features.hunting
 import at.legentpc.skyzen.SkyzenModLoader
 import at.legentpc.skyzen.config.features.hunting.HuntingConfig.FloorDropIsland
 import at.legentpc.skyzen.events.SkyzenEvents
+import at.legentpc.skyzen.events.WorldChangeEvent
 import at.legentpc.skyzen.module.Module
 import at.legentpc.skyzen.utils.HypixelUtils
 import at.legentpc.skyzen.utils.IslandType
@@ -59,10 +60,12 @@ object LineToFloorDrop : Module("Line to Floor Drop") {
             if (entity is Display.ItemDisplay) collectAt(entity.blockPosition())
             InteractionResult.PASS
         }
-        SkyzenEvents.WORLD_CHANGE.register {
-            floorDrops.clear()
-            collectedDrops.clear()
-        }
+        SkyzenEvents.WORLD_CHANGE.register(object : WorldChangeEvent {
+            override fun onWorldChange() {
+                floorDrops.clear()
+                collectedDrops.clear()
+            }
+        })
     }
 
     private fun scanForDrops() {
@@ -93,8 +96,8 @@ object LineToFloorDrop : Module("Line to Floor Drop") {
     private fun Display.ItemDisplay.isFloorDropMarker(playerY: Double): Boolean {
         val y = blockPosition().y.toDouble()
         if (y !in playerY - VERTICAL_SEARCH_RANGE..playerY + VERTICAL_SEARCH_RANGE) return false
-        val stack = getItemStack()
-        return !stack.isEmpty && stack.getItem() == Items.STRING
+        val stack = itemStack
+        return !stack.isEmpty && stack.item == Items.STRING
     }
 
     private fun collectAt(pos: BlockPos) {
@@ -119,7 +122,7 @@ object LineToFloorDrop : Module("Line to Floor Drop") {
         if (!isEnabled() || floorDrops.isEmpty()) return
         val player = Minecraft.getInstance().player ?: return
 
-        val eye = player.getEyePosition()
+        val eye = player.eyePosition
         val nearest = floorDrops.keys.minByOrNull { Vec3.atCenterOf(it).distanceToSqr(eye) } ?: return
         val target = Vec3.atLowerCornerWithOffset(nearest, 0.5, 0.25, 0.5)
 

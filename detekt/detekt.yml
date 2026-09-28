@@ -1,0 +1,81 @@
+config:
+  validation: true
+  warningsAsErrors: false
+
+style:
+  MagicNumber:
+    active: false
+
+  ReturnCount:
+    active: true
+    max: 5
+    excludeGuardClauses: true
+
+  MaxLineLength:
+    active: true
+    maxLineLength: 140
+    excludeCommentStatements: true
+
+  LoopWithTooManyJumpStatements:
+    active: true
+    maxJumpCount: 3
+
+  AbstractClassCanBeConcreteClass:
+    active: false
+
+  ForbiddenComment:
+    active: false
+
+complexity:
+  CyclomaticComplexMethod:
+    active: true
+    allowedComplexity: 25
+    ignoreSingleWhenExpression: false
+    ignoreSimpleWhenEntries: false
+    ignoreNestingFunctions: false
+    ignoreLocalFunctions: false
+
+  ComplexCondition:
+    active: true
+    allowedConditions: 6
+
+  LongMethod:
+    active: true
+    allowedLines: 100
+
+  LongParameterList:
+    active: false
+
+  NestedBlockDepth:
+    active: false
+
+  TooManyFunctions:
+    active: true
+    allowedFunctionsPerFile: 15
+    allowedFunctionsPerClass: 20
+    allowedFunctionsPerInterface: 20
+    allowedFunctionsPerObject: 20
+    allowedFunctionsPerEnum: 11
+    ignoreDeprecated: false
+    ignorePrivate: false
+    ignoreInternal: false
+    ignoreOverridden: false
+    ignoreAnnotatedFunctions: []
+
+empty-blocks:
+  EmptyCatchBlock:
+    active: true
+
+exceptions:
+  TooGenericExceptionCaught:
+    active: true
+
+  SwallowedException:
+    active: true
+
+potential-bugs:
+  DoubleMutabilityForCollection:
+    active: false
+
+  HasPlatformType:
+    active: false
